@@ -1,2 +1,4 @@
 # Ignore datasets folder
 ece662/**
+.DS_Store
+**/.DS_Store
