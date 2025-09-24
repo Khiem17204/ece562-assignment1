@@ -1,5 +1,13 @@
 # Ignore datasets folder
-ece662/**
+ece662/datasets/
+ece662/notebook_images/
+ece662/models/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 .DS_Store
 **/.DS_Store
 /.env
