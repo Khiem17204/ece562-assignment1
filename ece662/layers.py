@@ -27,8 +27,10 @@ def affine_forward(x, w, b):
     # will need to reshape the input into rows.                               #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-    pass
+    
+    # reshape to dimension D
+    x_rows = x.reshape(x.shape[0], -1)
+    out = x_rows.dot(w) + b
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -61,7 +63,13 @@ def affine_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    # Reshape x from cache
+    x_rows = x.reshape(x.shape[0], -1)
+    
+    # dx = dout . w transpose -> (N, D)
+    dx = dout.dot(w.T).reshape(x.shape) 
+    dw = x_rows.T.dot(dout)
+    db = np.sum(dout, axis=0)  # Sum over batch dimension
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
