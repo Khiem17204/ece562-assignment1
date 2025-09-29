@@ -2,7 +2,7 @@
 
 Student:
 - Khiem Le, ktle@umass.edu, 33604691
-- Tung (Tom) Ngo, tungngo@umass.edu
+- Tung (Tom) Ngo, tungngo@umass.edu, 33297893
 
 
 ### Set-up 
