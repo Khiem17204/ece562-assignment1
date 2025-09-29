@@ -383,7 +383,16 @@ def layernorm_forward(x, gamma, beta, ln_param):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    sample_mean = np.mean(x, axis=1, keepdims=True)
+    sample_var = np.var(x, axis=1, keepdims=True)
+    
+    x_centered = x - sample_mean
+    std = np.sqrt(sample_var + eps)
+    x_norm = x_centered / std
+
+    out = gamma * x_norm + beta
+
+    cache = (x, x_centered, std, x_norm, gamma, beta, eps)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
