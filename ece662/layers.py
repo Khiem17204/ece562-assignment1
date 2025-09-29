@@ -427,7 +427,21 @@ def layernorm_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    x, x_centered, std, x_norm, gamma, beta, eps = cache
+    N, D = x.shape
+
+    dgamma = np.sum(dout * x_norm, axis=0)
+    dbeta = np.sum(dout, axis=0)
+
+    dx_norm = dout * gamma
+
+    dstd = np.sum(dx_norm * x_centered * (-1) / (std**2), axis=1, keepdims=True)
+
+    dx_centered = dx_norm / std + dstd * 2 * x_centered / D
+
+    dmean = np.sum(dx_centered * (-1), axis=1, keepdims=True)
+
+    dx = dx_centered + dmean / D
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
