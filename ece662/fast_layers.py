@@ -10,6 +10,23 @@ except ImportError:
     print("\tThe instructions to do this will be given in a section of the notebook below.")
     print("\tThere will be an option for Colab users and another for Jupyter (local) users.")
 
+    def col2im_6d_cython(cols, N, C, H, W, HH, WW, pad, stride):
+        out_h = (H + 2 * pad - HH) // stride + 1
+        out_w = (W + 2 * pad - WW) // stride + 1
+        x_padded = np.zeros((N, C, H + 2 * pad, W + 2 * pad), dtype=cols.dtype)
+
+        for n in range(N):
+            for c in range(C):
+                for hh in range(HH):
+                    for ww in range(WW):
+                        for h in range(out_h):
+                            for w in range(out_w):
+                                x_padded[n, c, stride * h + hh, stride * w + ww] += cols[c, hh, ww, n, h, w]
+
+        if pad > 0:
+            return x_padded[:, :, pad:-pad, pad:-pad]
+        return x_padded
+
 from .im2col import *
 
 
