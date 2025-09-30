@@ -113,7 +113,19 @@ class ThreeLayerConvNet(object):
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        conv_out, conv_cache = conv_forward_fast(X, W1, b1, conv_param)
+        relu_out, relu_cache = relu_forward(conv_out)
+        pool_out, pool_cache = max_pool_forward_fast(relu_out, pool_param)
+
+        N = pool_out.shape[0]
+        pool_out_flat = pool_out.reshape(N, -1)
+
+        affine1_out, affine1_cache = affine_forward(pool_out_flat, W2, b2)
+        relu2_out, relu2_cache = relu_forward(affine1_out)
+
+        scores, affine2_cache = affine_forward(relu2_out, W3, b3)
+
+        self.caches = (conv_cache, relu_cache, pool_cache, affine1_cache, relu2_cache, affine2_cache)
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
