@@ -3,11 +3,11 @@
 set -euo pipefail
 
 CODE=(
-	"ece697ls/layers.py"
-	"ece697ls/classifiers/fc_net.py"
-	"ece697ls/optim.py"
-	"ece697ls/solver.py"
-	"ece697ls/classifiers/cnn.py"
+	"ece662/layers.py"
+	"ece662/classifiers/fc_net.py"
+	"ece662/optim.py"
+	"ece662/solver.py"
+	"ece662/classifiers/cnn.py"
 )
 
 # these notebooks should ideally
@@ -45,7 +45,9 @@ done
 
 echo -e "### Zipping file ###"
 rm -f ${ZIP_FILENAME}
-zip -q "${ZIP_FILENAME}" -r ${NOTEBOOKS[@]} $(find . -name "*.py") $(find . -name "*.pyx") -x "makepdf.py"
+zip -q "${ZIP_FILENAME}" -r "${NOTEBOOKS[@]}" -x "makepdf.py"
+
+find . -type f \( -name "*.py" -o -name "*.pyx" \) ! -name "makepdf.py" | zip -q -@ "${ZIP_FILENAME}"
 
 echo -e "### Creating PDFs ###"
 python makepdf.py --notebooks "${NOTEBOOKS[@]}"
